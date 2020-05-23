@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/the-pragmatic-developer/static/css/main.5f361e03.chunk.css",
+    "main.js": "/the-pragmatic-developer/static/js/main.08e65bc3.chunk.js",
+    "main.js.map": "/the-pragmatic-developer/static/js/main.08e65bc3.chunk.js.map",
+    "runtime-main.js": "/the-pragmatic-developer/static/js/runtime-main.dad321b7.js",
+    "runtime-main.js.map": "/the-pragmatic-developer/static/js/runtime-main.dad321b7.js.map",
+    "static/js/2.0445a66a.chunk.js": "/the-pragmatic-developer/static/js/2.0445a66a.chunk.js",
+    "static/js/2.0445a66a.chunk.js.map": "/the-pragmatic-developer/static/js/2.0445a66a.chunk.js.map",
+    "index.html": "/the-pragmatic-developer/index.html",
+    "precache-manifest.8f0106e8603d6ee07c55ae75101abde2.js": "/the-pragmatic-developer/precache-manifest.8f0106e8603d6ee07c55ae75101abde2.js",
+    "service-worker.js": "/the-pragmatic-developer/service-worker.js",
+    "static/css/main.5f361e03.chunk.css.map": "/the-pragmatic-developer/static/css/main.5f361e03.chunk.css.map",
+    "static/js/2.0445a66a.chunk.js.LICENSE.txt": "/the-pragmatic-developer/static/js/2.0445a66a.chunk.js.LICENSE.txt",
+    "static/media/logo.svg": "/the-pragmatic-developer/static/media/logo.5d5d9eef.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.dad321b7.js",
+    "static/js/2.0445a66a.chunk.js",
+    "static/css/main.5f361e03.chunk.css",
+    "static/js/main.08e65bc3.chunk.js"
+  ]
+}
