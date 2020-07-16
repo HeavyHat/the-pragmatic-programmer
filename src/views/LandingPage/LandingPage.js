@@ -1,8 +1,6 @@
 import React from "react";
-// nodejs library that concatenates classes
-import classNames from "classnames";
 // @material-ui/core components
-import { Container, Typography } from '@material-ui/core'
+import { Container } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 import GithubIssues from "components/GithubIssues/GithubIssues";
 

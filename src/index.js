@@ -13,7 +13,7 @@ import ContactPage from "./views/ContactPage/ContactPage.js";
 var hist = createBrowserHistory();
 
 const goToWeekly = () => {
-  hist.push("/")
+  hist.push("/the-pragmatic-programmer")
 };
 const goToAbout = () => {
   hist.push("/about");
@@ -40,8 +40,6 @@ ReactDOM.render(
         <Route exact path="/the-pragmatic-programmer" component={LandingPage} />
         <Route path="/post/:id" component={LandingPage} />
         <Route path="/author" component={AuthorPage} />
-        <Route path="/about" component={AboutPage} />
-        <Route path="/contact" component={ContactPage} />
       </Switch>
     </Router>
   </React.Fragment>,
