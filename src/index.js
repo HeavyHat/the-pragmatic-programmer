@@ -37,7 +37,7 @@ ReactDOM.render(
     <NavigationComponent pages={pagesConfig} />
     <Router history={hist}>
       <Switch>
-        <Route exact path="/" component={LandingPage} />
+        <Route exact path="/the-pragmatic-programmer" component={LandingPage} />
         <Route path="/post/:id" component={LandingPage} />
         <Route path="/author" component={AuthorPage} />
         <Route path="/about" component={AboutPage} />
