@@ -1,9 +1,11 @@
 import React from 'react';
 import parseLinkHeader from 'parse-link-header'
 import GithubIssue from 'components/GithubIssue/GithubIssue'
+import Post from 'components/Post/Post'
 import { Pagination, Skeleton } from '@material-ui/lab'
 import { withStyles } from '@material-ui/core/styles'
-import { Card, CardContent, Grid, Typography, Divider, Button } from '@material-ui/core'
+import { Card, CardContent, Grid, Typography, Divider } from '@material-ui/core'
+import { withRouter } from 'react-router-dom'
 
 
 const styles = (theme) => ({
@@ -29,6 +31,12 @@ const encodeParameters = (obj) => {
     return Object.entries(obj).map(kv => kv.map(encodeURIComponent).join('=')).join('&')
 }
 
+const getRand = (min, max) => {
+    let range = max - min;
+    range = Math.floor(Math.random() * range);
+    return min + range;
+}
+
 
 /**
  *
@@ -41,6 +49,7 @@ class GithubIssues extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            history: this.props.history,
             user: this.props.user,
             repo: this.props.repo,
             listFilter: { state: "open", choice: "issues" },
@@ -54,11 +63,14 @@ class GithubIssues extends React.Component {
             loading: true,
             error: null,
             showBody: {},
+            loadedPost: this.props.match.params.id ? { issue_id: this.props.match.params.id } : null
         };
 
         // fix the this value
         this.getIssues = this.getIssues.bind(this);
-        this.handleRepoChange = this.handleRepoChange.bind(this);
+        this.loadPost = this.loadPost.bind(this);
+        this.renderPost = this.renderPost.bind(this);
+        this.renderIssues = this.renderIssues.bind(this);
         this.handlePageChange = this.handlePageChange.bind(this);
         //this.handleFilterChange = this.handleFilterChange.bind(this);
 
@@ -75,6 +87,9 @@ class GithubIssues extends React.Component {
             return true;
         }
         if (previousState.listFilter !== nextState.listFilter) {
+            return true;
+        }
+        if (previousState.loadedPost !== nextState.loadedPost) {
             return true;
         }
         return false;
@@ -111,7 +126,15 @@ class GithubIssues extends React.Component {
         let userRepoIssues = `${this.state.user}/${this.state.repo}/issues`
 
         let fullUrl = `${baseUrl}/${userRepoIssues}?${params}`
-        console.log(fullUrl)
+        fetch(`https://api.github.com/rate_limit`, headers)
+            .then(response => {
+                if (response.ok) {
+                    return response.json()
+                }
+            })
+            .then(data => {
+                console.log(data)
+            })
         fetch(fullUrl, headers)
             .then(response => {
                 // If we have Link headers, parse them in to an object to store via appHelpers.parseLinkHeaders
@@ -119,11 +142,13 @@ class GithubIssues extends React.Component {
                     linkHeaders = parseLinkHeader(response.headers.get('Link'))
                 }
                 if (response.ok) {
+                    console.log(response)
                     return response.json();
                 }
                 throw new Error('Request failed.');
             })
             .then(data => {
+                console.log(data);
                 // set our state with the response
                 this.setState({
                     pages: linkHeaders,
@@ -163,7 +188,7 @@ class GithubIssues extends React.Component {
                                     <Typography variant="h4" display="block"><Skeleton animation="wave" width={240} /></Typography>
                                     <Typography variant="body1" display="block"><Skeleton animation="wave" /></Typography>
                                     <Typography variant="body1" display="block"><Skeleton animation="wave" /></Typography>
-                                    <Typography variant="body1" display="block"><Skeleton animation="wave" width={84}/></Typography>
+                                    <Typography variant="body1" display="block"><Skeleton animation="wave" width={getRand(64,400)}/></Typography>
                                     <Divider />
                                     <Skeleton animation="wave" width={64} height={44}/>
                                 </CardContent>
@@ -192,11 +217,20 @@ class GithubIssues extends React.Component {
         })
     }
 
-    // Handles interaction with the repository switcher in the header element
-    handleRepoChange(user, repo) {
-        /*this.setState(changeRepo(user, repo), () => {
-            this.getIssues()
-        })*/
+    renderPost() {
+        if(this.props.location.pathname.includes('post'))
+            return (<Post issue_id={this.state.loadedPost.issue_id} title={this.state.loadedPost.title} body={this.state.loadedPost.body} labels={this.state.loadedPost.labels} created_at={this.state.loadedPost.created_at}/>)
+        else if(this.state.loadedPost)
+            this.setState({loadedPost: null})
+        console.log("Rendering post")
+        return (<React.Fragment/>);
+    }
+
+    loadPost(issue) {
+        this.props.history.push(`/post/${issue.number}`)
+        this.setState({
+            loadedPost: issue
+        })
     }
 
     // Renders the panel blocks that contain the issue information
@@ -204,34 +238,34 @@ class GithubIssues extends React.Component {
         if (this.state.error) {
             return this.renderError();
         }
-        console.log(this.state.issues)
 
         return (
             < React.Fragment >
                 {
-                    this.state.issues.map(function (data, index) {
-                        return (<GithubIssue key={index} issue={data}></GithubIssue>)
+                    this.state.issues.map( (data, index) => {
+                        return (<GithubIssue key={index} issue={data} onClick={() => this.loadPost(data)}></GithubIssue>)
                     })
                 }
-
+                <Grid container justify="center" alignItems="center" spacing={2}>
+                    <Grid item xs={12} md={6}>
+                        <Pagination style={{
+                            margin: 'auto'
+                        }}  count={Math.ceil(this.state.number / this.state.per_page)} page={this.state.page} onChange={this.handlePageChange} showFirstButton showLastButton />
+                    </Grid>
+                </Grid>
             </ React.Fragment>
         );
     }
 
     render() {
-        return (
-            <React.Fragment>
-                {this.state.loading ?
-                this.renderLoading()
-                : this.renderIssues()}
-                <Pagination style={{
-                    margin: 'auto',
-                    flexGrow: 1,
-                    maxWidth: 500
-                }}  count={Math.ceil(this.state.number / this.state.per_page)} page={this.state.page} onChange={this.handlePageChange} showFirstButton showLastButton />
-
-            </React.Fragment>
-        );
+            return (
+                <React.Fragment>
+                    {
+                        this.state.loading ?
+                    this.renderLoading()
+                    :  this.state.loadedPost ? this.renderPost() : this.renderIssues()}
+                </React.Fragment>
+            );
     }
 }
-export default withStyles(styles)(GithubIssues);
+export default withRouter(withStyles(styles)(GithubIssues));

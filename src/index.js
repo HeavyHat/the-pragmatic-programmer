@@ -9,7 +9,6 @@ import LandingPage from "./views/LandingPage/LandingPage.js";
 import AboutPage from "./views/AboutPage/AboutPage.js";
 import AuthorPage from "./views/AuthorPage/AuthorPage.js";
 import ContactPage from "./views/ContactPage/ContactPage.js";
-import PostPage from "./views/PostPage/PostPage.js";
 
 var hist = createBrowserHistory();
 
@@ -39,10 +38,10 @@ ReactDOM.render(
     <Router history={hist}>
       <Switch>
         <Route exact path="/" component={LandingPage} />
+        <Route path="/post/:id" component={LandingPage} />
         <Route path="/author" component={AuthorPage} />
         <Route path="/about" component={AboutPage} />
         <Route path="/contact" component={ContactPage} />
-          <Route path="/post/:id" component={PostPage} />
       </Switch>
     </Router>
   </React.Fragment>,

@@ -1,10 +1,11 @@
 import React from "react";
-// @material-ui/core components
-import { Container, Typography, Grid, Paper, Chip } from '@material-ui/core'
+import { Container, Typography, Grid, Paper, Chip, Divider, Box, List, ListItem, ListItemText } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
+import FiberManualRecordSharpIcon from '@material-ui/icons/FiberManualRecordSharp';
 import { withRouter } from 'react-router'
 import ReactMarkdown from 'react-markdown'
 import parseLinkHeader from 'parse-link-header'
+import Disqus from 'disqus-react'
 
 const styles = (theme) => ({
   root: {
@@ -24,16 +25,71 @@ const styles = (theme) => ({
     }
 });
 
+function formatDate(date) {
+    let d = new Date(date),
+        month = "" + (d.getMonth() + 1),
+        day = "" + (d.getDay()),
+        year = "" + (d.getFullYear());
+    return [day, month, year].join('/');
+}
+
+function HeadingComponent(props) {
+    return (
+        <React.Fragment>
+            <Box m={4}/>
+            <Typography variant="h4">{props.children}</Typography>
+            <Divider />
+            <Box m={2}/>
+        </React.Fragment>
+    );
+}
+
 function ParagraphComponent(props) {
     return (
-        <Typography variant="body1">{props.children}</Typography>
+        <Typography variant={"body1"} component={"div"} paragraph={true}>{props.children}</Typography>
+
+    );
+}
+
+function ListComponent(props) {
+    return (
+            <List>
+                {props.children}
+            </List>
+    );
+}
+
+function ListItemComponent(props) {
+    return (
+            <ListItem>
+                <FiberManualRecordSharpIcon />
+                <ListItemText>{props.children}</ListItemText>
+            </ListItem>
+    );
+}
+
+function imgComponent(props) {
+    return (
+        <Grid container spacing={0} alignItems="center" justify="center">
+            <Grid item sm={12} md={9} style={{fontSize:0}}>
+                <Paper square={true} elevation={3}>
+                    <img {...props} style={{maxWidth: "100%", minWidth: "100%", margin:"auto", padding: 0}}/>
+                </Paper>
+            </Grid>
+        </Grid>
+    );
+}
+
+function BreakComponent(props) {
+    return (
+        <Box m={3}/>
     );
 }
 
 function CodeComponent(props) {
     return (
         <Paper style={{margin:20, padding:20}} variant="outlined" elevation={2} >
-            <pre className="prettyprint" style={{border: undefined, overflow: "auto"}}>
+            <pre className="prettyprint" style={{borderWidth: 0, overflow: "auto"}}>
                 <code className={props.language ? `language-${props.language}`: ""}>{props.value}</code>
             </pre>
         </Paper>
@@ -104,28 +160,36 @@ class Post extends React.Component{
             });
     }
 
-    formatDate(date) {
-        let d = new Date(date),
-            month = "" + (d.getMonth() + 1),
-            day = "" + (d.getDay()),
-            year = "" + (d.getFullYear());
-        return [day, month, year].join('/');
-    }
 
     render() {
         const { classes } = this.props;
         const renderers = {
             paragraph: ParagraphComponent,
-            code: CodeComponent
+            code: CodeComponent,
+            heading: HeadingComponent,
+            break: BreakComponent,
+            list: ListComponent,
+            listItem: ListItemComponent,
+            image: imgComponent,
+            imageReference: imgComponent
         }
+        let config ={
+            url: window.location.href,
+            identifier: this.state.issue_id,
+            title: this.props.title
+        }
+        console.log(config)
         return (
             <Container style={{marginTop:120}}>
                     <Grid container spacing={2}>
                         <Grid item xs={9}>
-                            <Typography variant="h4">{this.state.title}</Typography>
+                            <Typography variant="h3">{this.state.title}</Typography>
                         </Grid>
                         <Grid item xs={3}>
-                            <Typography variant="subtitle1">{this.state.created_at}</Typography>
+                            <Typography variant="subtitle1" align="right">{formatDate(this.state.created_at)}</Typography>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Divider />
                         </Grid>
                         <Grid item xs={9}>
                         {
@@ -137,6 +201,9 @@ class Post extends React.Component{
                         </Grid>
                         <Grid item xs={12}>
                             <ReactMarkdown source={this.state.body} renderers={renderers}></ReactMarkdown>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Disqus.DiscussionEmbed shortname="the-pragmatic-programmer" config={config} />
                         </Grid>
                     </Grid>
                 </Container>

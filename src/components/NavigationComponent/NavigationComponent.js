@@ -1,5 +1,5 @@
 import React from 'react'
-import { Drawer, Divider, ListItem, ListItemIcon, Button, Typography, Toolbar, IconButton, List, ListItemText } from '@material-ui/core'
+import { Drawer, Divider, ListItem, ListItemIcon, AppBar, Typography, Toolbar, IconButton, List, ListItemText } from '@material-ui/core'
 import { makeStyles } from "@material-ui/core/styles";
 import MenuIcon from '@material-ui/icons/Menu'
 import ChevronRightIcon from '@material-ui/icons/ChevronRight'
@@ -39,15 +39,16 @@ export default function NavigationComponent({ pages }) {
 
     return (
         <React.Fragment>
-            <Toolbar>
-                <IconButton onClick={toggleDrawer('left', true)} edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-                    <MenuIcon />
-                </IconButton>
-                <Typography variant="h6" className={classes.title}>
-                    The Pragmatic Programmer
-                </Typography>
-                <Button color="inherit">Login</Button>
-            </Toolbar>
+            <AppBar position={'sticky'}>
+                <Toolbar>
+                    <IconButton onClick={toggleDrawer('left', true)} edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+                        <MenuIcon />
+                    </IconButton>
+                    <Typography variant="h6" className={classes.title}>
+                        The Pragmatic Programmer
+                    </Typography>
+                </Toolbar>
+            </AppBar>
             <Drawer anchor='left' open={state['left']} onClose={toggleDrawer('left', false)}>
                 <Typography className={classes.navHeader} variant="h6">The Pragmatic Developer</Typography>
                 <Divider />

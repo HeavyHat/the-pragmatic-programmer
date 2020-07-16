@@ -36,7 +36,8 @@ class GithubIssue extends React.Component {
             title: this.props.issue.title,
             body: this.props.issue.body,
             labels: this.props.issue.labels,
-            created_at: this.props.issue.created_at
+            created_at: this.props.issue.created_at,
+            onClick: this.props.onClick
         };
     }
 
@@ -80,7 +81,7 @@ class GithubIssue extends React.Component {
                     <Typography variant="h4" display="block">{this.state.title}</Typography>
                     <ReactMarkdown source={bodyArray[0] || ""} renderers={renderers}/>
                     <Divider />
-                    <Button variant="contained" color="primary" href={`/post/${this.state.issue_id}`}>View</Button>
+                    <Button variant="contained" color="primary" onClick={this.state.onClick}>View</Button>
                 </CardContent>
             </Card>
             );

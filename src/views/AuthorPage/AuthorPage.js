@@ -2,25 +2,30 @@ import React from "react";
 // nodejs library that concatenates classes
 // @material-ui/core components
 import { Container, Typography, Card, CardContent, Divider, Grid } from '@material-ui/core'
-import { makeStyles } from '@material-ui/styles'
+import { makeStyles } from '@material-ui/core/styles'
 
 // @material-ui/icons
-
-
+let styles = makeStyles(theme => (
+    {
+        root: {
+            margin: theme.spacing(3)
+        }
+    }
+))
 
 
 
 export default function AuthorPage(props) {
+  const classes = styles();
   return (
-      <div >
-        <Container>
+        <Container className={classes.root}>
             <Card>
                 <CardContent>
-                    <Typography variant="h2">The Author</Typography>
+                    <Typography variant="h4">The Author</Typography>
                     <Divider />
                     <Grid container spacing={4}>
                         <Grid item xs={8}>
-                            <Typography>Hi! My name is Josh.
+                            <Typography variant="body1">Hi! My name is Josh.
 
                                 Thanks for having a look around and let me know if theres anything in partiocular you would like to see in the future.
 
@@ -33,6 +38,5 @@ export default function AuthorPage(props) {
                 </CardContent>
             </Card>
         </Container>
-      </div>
   );
 }
