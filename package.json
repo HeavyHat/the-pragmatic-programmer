@@ -1,8 +1,8 @@
 {
-  "name": "the-pragmatic-developer",
+  "name": "the-pragmatic-programmer",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://heavyhat.github.io/the-pragmatic-developer/",
+  "homepage": "https://heavyhat.github.io/the-pragmatic-programmer/",
   "dependencies": {
     "@material-ui/core": "^4.11.0",
     "@material-ui/lab": "^4.0.0-alpha.56",

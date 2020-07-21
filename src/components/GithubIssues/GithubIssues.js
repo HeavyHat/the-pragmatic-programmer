@@ -122,8 +122,23 @@ class GithubIssues extends React.Component {
         // Need an empty string to store Link headers from GET response since we need to reference it within promise chain - used for pagination
         let linkHeaders = ''
 
+        let userRepo = `${baseUrl}/${this.state.user}/${this.state.repo}`
         // Build the URL from props/state(for the page) - [note: when state.page changes, we update]
         let userRepoIssues = `${this.state.user}/${this.state.repo}/issues`
+        fetch(userRepo, headers)
+            .then(response => {
+                if (response.ok) {
+                    console.log(response)
+                    return response.json();
+                }
+                throw new Error('Request failed.');
+            })
+            .then(data => {
+                console.log(data)
+                this.setState({
+                    number: data.open_issues_count
+                })
+            })
 
         let fullUrl = `${baseUrl}/${userRepoIssues}?${params}`
         fetch(`https://api.github.com/rate_limit`, headers)
@@ -153,7 +168,6 @@ class GithubIssues extends React.Component {
                 this.setState({
                     pages: linkHeaders,
                     issues: data,
-                    number: this.state.number || data[0].number,
                     loading: false,
                     error: null,
                     showBody: {},
@@ -227,7 +241,7 @@ class GithubIssues extends React.Component {
     }
 
     loadPost(issue) {
-        this.props.history.push(`/post/${issue.number}`)
+        this.props.history.push(`/the-pragmatic-programmer/post/${issue.number}`)
         this.setState({
             loadedPost: issue
         })

@@ -74,11 +74,13 @@ class GithubIssue extends React.Component {
                             })
                         }
                         </Grid>
-                        <Grid item xs={2}>
+                        <Grid item xs={12} md={9}>
+                            <Typography variant="h4" display="block">{this.state.title}</Typography>
+                        </Grid>
+                        <Grid item xs={12} md={9}>
                             <Typography variant="subtitle1" displaye="block" align="right">{this.formatDate(this.state.created_at)}</Typography>
                         </Grid>
                     </Grid>
-                    <Typography variant="h4" display="block">{this.state.title}</Typography>
                     <ReactMarkdown source={bodyArray[0] || ""} renderers={renderers}/>
                     <Divider />
                     <Button variant="contained" color="primary" onClick={this.state.onClick}>View</Button>

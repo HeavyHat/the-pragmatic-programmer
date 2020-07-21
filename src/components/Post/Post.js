@@ -178,14 +178,13 @@ class Post extends React.Component{
             identifier: this.state.issue_id,
             title: this.props.title
         }
-        console.log(config)
         return (
             <Container style={{marginTop:120}}>
                     <Grid container spacing={2}>
                         <Grid item xs={9}>
                             <Typography variant="h3">{this.state.title}</Typography>
                         </Grid>
-                        <Grid item xs={3}>
+                        <Grid item xs={3} md={3}>
                             <Typography variant="subtitle1" align="right">{formatDate(this.state.created_at)}</Typography>
                         </Grid>
                         <Grid item xs={12}>

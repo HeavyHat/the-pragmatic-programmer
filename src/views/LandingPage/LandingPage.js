@@ -41,7 +41,7 @@ export default function LandingPage(props) {
   return (
       <div className={classes.root}>
         <Container>
-            <GithubIssues user="Heavyhat" repo="the-pragmatic-developer" />
+            <GithubIssues user="Heavyhat" repo="the-pragmatic-programmer" />
         </Container>
       </div>
   );

@@ -16,14 +16,14 @@ const goToWeekly = () => {
   hist.push("/the-pragmatic-programmer")
 };
 const goToAbout = () => {
-  hist.push("/about");
+  hist.push("/the-pragmatic-programmer/about");
 };
 const goToAuthor = () => {
   console.log("goind to author")
-  hist.push("/author");
+  hist.push("/the-pragmatic-programmer/author");
 };
 const goToContact = () => {
-  hist.push("/contact");
+  hist.push("/the-pragmatic-programmer/contact");
 };
 const pagesConfig= [
     { name: "Weekly", clickHandler: goToWeekly },
@@ -38,8 +38,8 @@ ReactDOM.render(
     <Router history={hist}>
       <Switch>
         <Route exact path="/the-pragmatic-programmer" component={LandingPage} />
-        <Route path="/post/:id" component={LandingPage} />
-        <Route path="/author" component={AuthorPage} />
+        <Route path="/the-pragmatic-programmer/post/:id" component={LandingPage} />
+        <Route path="/the-pragmatic-programmer/author" component={AuthorPage} />
       </Switch>
     </Router>
   </React.Fragment>,
