@@ -6,7 +6,6 @@ import { withStyles } from '@material-ui/core/styles'
 import FiberManualRecordSharpIcon from '@material-ui/icons/FiberManualRecordSharp';
 import { withRouter } from 'react-router'
 import ReactMarkdown from 'react-markdown'
-import parseLinkHeader from 'parse-link-header'
 import Disqus from 'disqus-react'
 
 const languageMap = {
@@ -76,11 +75,12 @@ function ListItemComponent(props) {
 }
 
 function imgComponent(props) {
+    console.log(props)
     return (
         <Grid container spacing={0} alignItems="center" justify="center">
             <Grid item sm={12} md={9} style={{fontSize:0}}>
                 <Paper square={true} elevation={3}>
-                    <img {...props} style={{maxWidth: "100%", minWidth: "100%", margin:"auto", padding: 0}}/>
+                    <img alt={props.alt} src={props.src} style={{maxWidth: "100%", minWidth: "100%", margin:"auto", padding: 0}}/>
                 </Paper>
             </Grid>
         </Grid>
@@ -138,15 +138,11 @@ class Post extends React.Component{
             }
         };
         const baseUrl = "https://api.github.com/repos"
-        let linkHeaders = ''
         let userRepoIssue = `Heavyhat/the-pragmatic-programmer/issues/${this.state.issue_id}`
         let fullUrl = `${baseUrl}/${userRepoIssue}`
         console.log(fullUrl)
         fetch(fullUrl, headers)
             .then(response => {
-                if (response.headers.get('Link')) {
-                    linkHeaders = parseLinkHeader(response.headers.get('Link'))
-                }
                 if (response.ok) {
                     return response.json();
                 }
