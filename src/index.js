@@ -2,13 +2,10 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { createBrowserHistory } from "history";
 import { Router, Route, Switch } from "react-router-dom";
-import { useHistory } from 'react-router-dom'
 import NavigationComponent from 'components/NavigationComponent/NavigationComponent.js'
 
 import LandingPage from "./views/LandingPage/LandingPage.js";
-import AboutPage from "./views/AboutPage/AboutPage.js";
 import AuthorPage from "./views/AuthorPage/AuthorPage.js";
-import ContactPage from "./views/ContactPage/ContactPage.js";
 
 var hist = createBrowserHistory();
 

@@ -3,7 +3,6 @@ import { Drawer, Divider, ListItem, ListItemIcon, AppBar, Typography, Toolbar, I
 import { makeStyles } from "@material-ui/core/styles";
 import MenuIcon from '@material-ui/icons/Menu'
 import ChevronRightIcon from '@material-ui/icons/ChevronRight'
-import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     menuButton: {

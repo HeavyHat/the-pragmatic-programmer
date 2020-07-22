@@ -101,12 +101,15 @@ class GithubIssues extends React.Component {
     getIssues() {
 
         // Use auth token with Github API in order to have a higher rate limit for this example - not recommended for client-side use in production
+        console.log(process)
+        console.log(process.env)
         const headers = {
             headers: {
-                Authorization: "token 60e07ff280c786e523a632be9af8f992270a5c5b",
+                Authorization: `token ${process.env.REACT_APP_GITHUB_ACCESS_TOKEN}`,
                 Accept: "application/vnd.github.v3+json,application/vnd.github.machine-man-preview+json",
             }
         };
+        console.log(headers)
 
         const baseUrl = "https://api.github.com/repos"
 

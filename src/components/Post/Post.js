@@ -19,10 +19,10 @@ const styles = (theme) => ({
   chip: {
       margin: theme.spacing(0.5)
   },
-    card: {
-        marginTop: theme.spacing(5),
-        marginBottom: theme.spacing(5)
-    }
+  card: {
+      marginTop: theme.spacing(5),
+      marginBottom: theme.spacing(5)
+  },
 });
 
 function formatDate(date) {
@@ -89,8 +89,8 @@ function BreakComponent(props) {
 function CodeComponent(props) {
     return (
         <Paper style={{margin:20, padding:20}} variant="outlined" elevation={2} >
-            <pre className="prettyprint" style={{borderWidth: 0, overflow: "auto"}}>
-                <code className={props.language ? `language-${props.language}`: ""}>{props.value}</code>
+            <pre className="prettyprint linenums" >
+                {props.value}
             </pre>
         </Paper>
     );
@@ -129,7 +129,7 @@ class Post extends React.Component{
         };
         const baseUrl = "https://api.github.com/repos"
         let linkHeaders = ''
-        let userRepoIssue = `Heavyhat/the-pragmatic-developer/issues/${this.state.issue_id}`
+        let userRepoIssue = `Heavyhat/the-pragmatic-programmer/issues/${this.state.issue_id}`
         let fullUrl = `${baseUrl}/${userRepoIssue}`
         console.log(fullUrl)
         fetch(fullUrl, headers)
@@ -144,6 +144,7 @@ class Post extends React.Component{
             })
             .then(data => {
                 // set our state with the response
+                console.log(data)
                 this.setState({
                     title: data.title,
                     body: data.body,
@@ -153,6 +154,7 @@ class Post extends React.Component{
                 });
             })
             .catch(error => {
+                console.log(error)
                 this.setState({
                     loaded: true,
                     error: error

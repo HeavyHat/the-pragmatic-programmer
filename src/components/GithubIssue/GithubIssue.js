@@ -77,8 +77,8 @@ class GithubIssue extends React.Component {
                         <Grid item xs={12} md={9}>
                             <Typography variant="h4" display="block">{this.state.title}</Typography>
                         </Grid>
-                        <Grid item xs={12} md={9}>
-                            <Typography variant="subtitle1" displaye="block" align="right">{this.formatDate(this.state.created_at)}</Typography>
+                        <Grid item xs={12} md={2}>
+                            <Typography variant="subtitle1" display="block" align="right">{this.formatDate(this.state.created_at)}</Typography>
                         </Grid>
                     </Grid>
                     <ReactMarkdown source={bodyArray[0] || ""} renderers={renderers}/>
