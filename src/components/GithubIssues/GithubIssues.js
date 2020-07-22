@@ -166,7 +166,6 @@ class GithubIssues extends React.Component {
                 throw new Error('Request failed.');
             })
             .then(data => {
-                console.log(data);
                 // set our state with the response
                 this.setState({
                     pages: linkHeaders,

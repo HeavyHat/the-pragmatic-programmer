@@ -1,4 +1,6 @@
 import React from "react";
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { darcula } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import { Container, Typography, Grid, Paper, Chip, Divider, Box, List, ListItem, ListItemText } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
 import FiberManualRecordSharpIcon from '@material-ui/icons/FiberManualRecordSharp';
@@ -6,6 +8,11 @@ import { withRouter } from 'react-router'
 import ReactMarkdown from 'react-markdown'
 import parseLinkHeader from 'parse-link-header'
 import Disqus from 'disqus-react'
+
+const languageMap = {
+    "c++" : "cpp",
+    "js" : "javascript"
+}
 
 const styles = (theme) => ({
   root: {
@@ -86,12 +93,15 @@ function BreakComponent(props) {
     );
 }
 
+function translateLanguage(language) {
+    return language in languageMap ? `${languageMap[language]}` : `${language}`
+}
+
 function CodeComponent(props) {
     return (
         <Paper style={{margin:20, padding:20}} variant="outlined" elevation={2} >
-            <pre className="prettyprint linenums" >
-                {props.value}
-            </pre>
+            <SyntaxHighlighter language={translateLanguage(props.language)} showLineNumbers={true} style={darcula} children={props.value}>
+            </SyntaxHighlighter>
         </Paper>
     );
 }
