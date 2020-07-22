@@ -3,10 +3,6 @@
 
 name: Node.js GH Page
 
-on:
-  release:
-    types: [created]
-
 jobs:
   publish-page:
     runs-on: ubuntu-latest
