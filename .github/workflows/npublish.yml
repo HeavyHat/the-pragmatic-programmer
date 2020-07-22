@@ -8,8 +8,7 @@ on:
     types: [created]
 
 jobs:
-  publish-npm:
-    needs: build
+  publish-page:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
