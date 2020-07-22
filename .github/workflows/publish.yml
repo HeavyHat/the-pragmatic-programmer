@@ -3,7 +3,7 @@
 
 name: Github Page Publish
 
-on: 
+on:
   push:
     branches:
       - master
@@ -19,6 +19,9 @@ jobs:
         with:
           node-version: 12
           registry-url: https://registry.npmjs.org/
+				- uses: oleksiyrudenko/gha-git-credentials@v1
+					with:
+						token: '${{ secrets.GITHUB_TOKEN }}'
       - run: npm install
       - run: npm run deploy
         env:
